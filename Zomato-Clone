@@ -1,0 +1,62 @@
+import datetime
+
+itemsDict = {
+'KFC':(('10 strips & 2 Dips Bucket.','₹ 449.00'),('8 pc Hot & Crispy Chicken.','₹ 650.00'),('6 pc Hot & Crispy Chicken.','₹ 549.00')),
+'A2B':(('Dosa','₹ 125'),('Dal Makhani','₹ 192'),('Tandoori Roti','₹ 30')),
+'Bawarchi':(('Mutton Biryani','₹ 300'),('Chicken Biryani','₹ 220'),('Tandoori Roti','₹ 20'))}
+orderDetails = {}
+
+class order:
+    def __init__(self,itemName,price,restaurant,orderedTime):
+        self.ItemName = itemName
+        self.restaurant = restaurant
+        self.price = price
+        self.orderedTime = orderedTime
+
+    def Display_Order_Details(self):
+        print("You have Ordered "+self.ItemName+" "+self.price+" from "+self.restaurant)
+
+
+Username = input("Enter your name : ")
+orderId = 0
+while True:
+    print("1. Order\n2. Track your order \n3. Exit")
+    option = input("Enter Your Option : ")
+    if int(option) == 1:
+        print("Hi "+Username+". Select a Restaurant to Order :")
+        for i in itemsDict.keys():
+            print(i)
+        restaurantInput = input("Enter your Option : ")
+        restaurant = ""
+        if int(restaurantInput) == 1:
+            restaurant = 'KFC'
+        elif int(restaurantInput) == 2:
+            restaurant = 'A2B'
+        else:
+            restaurant = 'Bawarchi'
+        restaurantData = itemsDict[restaurant]
+        print("Select the Items to Order : ")
+        for j in restaurantData:
+            print(j[0]+"     "+j[1])
+        orderInput = input("Enter your Option : ")
+        orderId += 1
+        orderedTime = datetime.datetime.now()
+        ord1 = order(restaurantData[int(orderInput)-1][0],restaurantData[int(orderInput)-1][1],restaurant,orderedTime)
+        orderDetails[orderId] = ord1
+        print("Thank you for the Order. your Order Id is "+str(orderId))
+
+    elif  int(option) == 2:
+
+        cusorderId = int(input("Enter your Order Id : "))
+        print("Your Order Details are : ")
+        orderDetails[cusorderId].Display_Order_Details()
+        statusTime =  datetime.datetime.now() - orderDetails[cusorderId].orderedTime
+        if 30 - (statusTime.seconds//60)%60 <= 0:
+            print("We have Delivered your order Successfuly")
+        else:
+            print("We will Deliver your Order in "+str(30 - (statusTime.seconds//60)%60)+" Minutes.")
+    
+    else:
+        print("Thank you for your Time.")
+        break
+    
