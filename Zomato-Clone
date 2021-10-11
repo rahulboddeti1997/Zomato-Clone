@@ -24,8 +24,10 @@ while True:
     option = input("Enter Your Option : ")
     if int(option) == 1:
         print("Hi "+Username+". Select a Restaurant to Order :")
+        rescount = 1
         for i in itemsDict.keys():
-            print(i)
+            print(str(rescount)+". "+i)
+            rescount += 1
         restaurantInput = input("Enter your Option : ")
         restaurant = ""
         if int(restaurantInput) == 1:
@@ -36,8 +38,10 @@ while True:
             restaurant = 'Bawarchi'
         restaurantData = itemsDict[restaurant]
         print("Select the Items to Order : ")
+        count = 1
         for j in restaurantData:
-            print(j[0]+"     "+j[1])
+            print(str(count)+". "+j[0]+"     "+j[1])
+            count += 1
         orderInput = input("Enter your Option : ")
         orderId += 1
         orderedTime = datetime.datetime.now()
@@ -48,7 +52,11 @@ while True:
     elif  int(option) == 2:
 
         cusorderId = int(input("Enter your Order Id : "))
+        if cusorderId not in orderDetails:
+            print("Please enter Valid Order Id.")
+            continue
         print("Your Order Details are : ")
+        
         orderDetails[cusorderId].Display_Order_Details()
         statusTime =  datetime.datetime.now() - orderDetails[cusorderId].orderedTime
         if 30 - (statusTime.seconds//60)%60 <= 0:
